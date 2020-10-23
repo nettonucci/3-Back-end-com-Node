@@ -1,0 +1,8 @@
+{
+  "name": "3-Back-end-com-Node",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/nettonucci/3-Back-end-com-Node.git",
+  "author": "Netto Nucci <nettonucci@gmail.com>",
+  "license": "MIT"
+}
