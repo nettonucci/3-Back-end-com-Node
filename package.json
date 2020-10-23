@@ -7,7 +7,6 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon"
-
   },
   "dependencies": {
     "express": "^4.17.1"
