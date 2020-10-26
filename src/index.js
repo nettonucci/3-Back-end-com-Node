@@ -1,5 +1,5 @@
 const express = require("express");
-const { uuid } = require("uuidv4");
+const { uuid, isUuid } = require("uuidv4");
 
 const app = express();
 
@@ -14,7 +14,36 @@ app.use(express.json());
  * DELETE: Deletar uma informação no back-end
  */
 
+/**
+ * Middleware:
+ *
+ * Interceptador de requisições que interrompe totalmente a requisição ou alterar dados da requisição
+ */
+
 const projects = [];
+
+function logRequest(request, response, next) {
+  const { method, url } = request;
+
+  const logLabel = `[${method.toUpperCase()}] ${url}`;
+
+  console.log(logLabel);
+
+  return next(); // Próximo middleware
+}
+
+function validadePorjectId(request, response, next) {
+  const { id } = request.params;
+
+  if (!isUuid(id)) {
+    return response.status(400).json({ error: "Invalid project ID." });
+  }
+
+  return next();
+}
+
+app.use(logRequest);
+app.use("/projects/:id", validadePorjectId);
 
 app.get("/projects", (request, response) => {
   const { title } = request.query;
@@ -28,8 +57,6 @@ app.get("/projects", (request, response) => {
 
 app.post("/projects", (request, response) => {
   const { title, owner } = request.body;
-
-  // console.log(body);
 
   const project = { id: uuid(), title, owner };
 
